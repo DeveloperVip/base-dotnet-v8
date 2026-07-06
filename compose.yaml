@@ -1,0 +1,6 @@
+services:
+  growth-planning-be:
+    image: growth-planning-be
+    build:
+      context: .
+      dockerfile: growth-planning-be/Dockerfile

@@ -1,0 +1,41 @@
+stages:
+  - pull
+  - build
+  - publish
+
+variables:
+  CONFIGURATION: "Release"
+  PROJECT_PATH: "C:\\Users\\GIAUTHETAI\\Documents\\GitHub\\HaUI\\growth-planning-be\\growth-planning-be\\growth-planning-be.csproj"  # Đường dẫn đến file .csproj
+  DEPLOY_DIR: "C:\\Web\\growth-planning-be"  # Thư mục IIS site đã config
+  GIT_SSH_COMMAND: "ssh -i C:/GitLab-Runner/.ssh/id_rsa -o StrictHostKeyChecking=no"
+  WEB_APP_POOL: "growth-planning-be"
+  
+
+pull:
+  stage: pull
+  tags: [windows]
+  script:
+    # Di chuyển đến thư mục chứa mã nguồn và thực hiện pull
+    - powershell -Command "cd C:/Users/GIAUTHETAI/Documents/GitHub/HaUI/growth-planning-be; git pull"  # Pull code mới từ Git repository
+
+build:
+  stage: build
+  tags: [windows]
+  script:
+    # Build dự án sau khi pull mã nguồn
+    - powershell -Command "dotnet build $env:PROJECT_PATH -c $env:CONFIGURATION --no-restore"  # Build dự án (đã restore trước đó)
+
+publish:
+  stage: publish
+  tags: [windows]
+  script:
+    # Stop IIS
+    - powershell -Command "iisreset /stop"
+    # Kiểm tra và tạo thư mục DEPLOY_DIR nếu không tồn tại
+    - powershell -Command "if (!(Test-Path $env:DEPLOY_DIR)) { New-Item -ItemType Directory -Path $env:DEPLOY_DIR }"
+    # Xoá nội dung cũ trong thư mục deploy (nếu có)
+    - powershell -Command "if (Test-Path $env:DEPLOY_DIR) { Remove-Item $env:DEPLOY_DIR\\* -Recurse -Force -ErrorAction SilentlyContinue }"
+    # Publish thẳng vào thư mục IIS
+    - powershell -Command "dotnet publish $env:PROJECT_PATH -c $env:CONFIGURATION -o $env:DEPLOY_DIR"
+    # Restart IIS nếu cần
+    - powershell -Command "iisreset /start"

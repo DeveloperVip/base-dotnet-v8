@@ -1,0 +1,6 @@
+@growth_planning_be_HostAddress = http://localhost:5197
+
+GET {{growth_planning_be_HostAddress}}/api/v1/Auth/HealCheck
+Accept: application/json
+
+###

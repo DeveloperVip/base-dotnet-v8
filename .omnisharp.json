@@ -1,0 +1,21 @@
+{
+  "Solution": "./growth-planning-be.sln",
+  "EnableRoslynAnalyzers": true,
+  "EnableEditorConfigSupport": true,
+  "OrganizeImportsOnFormat": true,
+  "EnableImportCompletion": true,
+  "EnableAsyncCompletion": true,
+  "MsBuild": {
+    "LoadProjectsOnDemand": false,
+    "UseLegacySdkResolver": false
+  },
+  "FormattingOptions": {
+    "EnableEditorConfigSupport": true,
+    "OrganizeImports": true
+  },
+  "RoslynExtensionsOptions": {
+    "EnableAnalyzersSupport": true,
+    "LocationPaths": []
+  }
+}
+

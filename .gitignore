@@ -1,0 +1,7 @@
+growth-planning-be/appsettings.json
+growth-planning-be/appsettings.Development.json
+/growth-planning-be/bin
+/growth-planning-be/obj
+/.vs/growth-planning-be
+/growth-planning-be/Properties/PublishProfiles
+*/firebase-adminsdk*.json
